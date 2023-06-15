@@ -41,7 +41,7 @@ jobs:
         run: echo ACCESS_TOKEN=\"$ACCESS_TOKEN\" > local.properties
           
       - name: Build and Test
-        run: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@v2
         
       - name: Build app
         run: ./gradlew assemble
