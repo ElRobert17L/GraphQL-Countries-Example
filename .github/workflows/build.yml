@@ -26,22 +26,14 @@ jobs:
           cache: gradle
 
       # Runs a set of commands using the runners shell
-      - name: Test
+      - name: Add secrets
         run: |
-          if [ "$ACCESS_TOKEN" == "glpat-JoEm5DUePAMdVw4_2h_p" ]
-          then
-            echo "Got secret"
-          fi
-        env: 
-          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-      
-      - name: Read secret
-        env:
-          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-        run: echo ACCESS_TOKEN=\"$ACCESS_TOKEN\" > local.properties
+          cat > local.properties << ENDOFFILE
+          ACCESS_TOKEN=${{ secrets.ACCESS_TOKEN }}
+          ENDOFFILE
           
       - name: Build and Test
-        run: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@v2
         
       - name: Build app
         run: ./gradlew assemble
