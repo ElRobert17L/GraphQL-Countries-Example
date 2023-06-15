@@ -26,8 +26,9 @@ jobs:
 
       # Runs a set of commands using the runners shell
       - name: Read secret
-        id: read-secret
-        run: echo "ACCESS_TOKEN=${{ secrets.ACCESS_TOKEN }}" >> $GITHUB_ENV
+        env:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        run: echo ACCESS_TOKEN=\"$ACCESS_TOKEN\" > ./local.properties
           
       - name: Build and Test
         env:
