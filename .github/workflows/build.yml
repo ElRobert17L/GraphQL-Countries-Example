@@ -28,9 +28,7 @@ jobs:
       - name: Read secret
         env:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-        run: echo ACCESS_TOKEN=\"$ACCESS_TOKEN\" > ./local.properties
+        run: echo ACCESS_TOKEN=\"$ACCESS_TOKEN\" > local.properties
           
       - name: Build and Test
-        env:
-          ACCESS_TOKEN: ${{ env.ACCESS_TOKEN }}
         run: ./gradlew build
