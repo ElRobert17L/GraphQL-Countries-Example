@@ -25,10 +25,9 @@ jobs:
           distribution: 'temurin'
 
       # Runs a set of commands using the runners shell
-      - name: Read local.properties
-        id: read-properties
-        run: |
-          echo "ACCESS_TOKEN=$(cat local.properties | grep ACCESS_TOKEN | cut -d= -f2)" >> $GITHUB_ENV
+      - name: Read secret
+        id: read-secret
+        run: echo "ACCESS_TOKEN=${{ secrets.ACCESS_TOKEN }}" >> $GITHUB_ENV
           
       - name: Build and Test
         env:
