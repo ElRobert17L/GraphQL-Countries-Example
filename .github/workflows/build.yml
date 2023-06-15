@@ -23,8 +23,18 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
+          cache: gradle
 
       # Runs a set of commands using the runners shell
+      - name: Test
+        run: |
+          if [ "$ACCESS_TOKEN" == "ACCESS_TOKEN" ]
+          then
+            echo "Got secret"
+          fi
+        env: 
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+      
       - name: Read secret
         env:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
