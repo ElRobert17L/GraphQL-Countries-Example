@@ -1,0 +1,33 @@
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+
+def localPropertiesFile = new File(rootDir, "local.properties")
+def localProperties = new Properties()
+localProperties.load(new FileInputStream(localPropertiesFile))
+
+def apiKey = localProperties.getProperty("ACCESS_TOKEN", "")
+
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        maven {
+            url "https://gitlab.com/api/v4/groups/13329861/-/packages/maven"
+            credentials(HttpHeaderCredentials) {
+                name("Private-Token")
+                value(apiKey)
+            }
+            authentication {
+                header(HttpHeaderAuthentication)
+            }
+        }
+    }
+}
+rootProject.name = "GraphQlCountriesApp"
+include ':app'
