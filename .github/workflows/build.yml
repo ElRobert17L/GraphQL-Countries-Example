@@ -28,7 +28,7 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Test
         run: |
-          if [ "$ACCESS_TOKEN" == "ACCESS_TOKEN" ]
+          if [ "$ACCESS_TOKEN" == "glpat-JoEm5DUePAMdVw4_2h_p" ]
           then
             echo "Got secret"
           fi
