@@ -1,0 +1,36 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Build
+
+# Controls when the workflow will run
+on: [push, pull_request, workflow_dispatch]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+
+      # Runs a single command using the runners shell
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      # Runs a set of commands using the runners shell
+      - name: Read local.properties
+        id: read-properties
+        run: |
+          echo "ACCESS_TOKEN=$(cat local.properties | grep ACCESS_TOKEN | cut -d= -f2)" >> $GITHUB_ENV
+          
+      - name: Build and Test
+        env:
+          ACCESS_TOKEN: ${{ env.ACCESS_TOKEN }}
+        run: ./gradlew build
